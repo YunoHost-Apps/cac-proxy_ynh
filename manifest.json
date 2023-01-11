@@ -1,0 +1,46 @@
+{
+    "name": "Cookie Aware Cors Proxy",
+    "id": "cac-proxy",
+    "packaging_format": 1,
+    "description": {
+        "en": "An advanced https proxy allowing you to call other websites from your own web application.",
+        "fr": "Un proxy https avancé vous permettant d'appeler d'autres sites depuis votre propre application web."
+    },
+    "version": "1.0~ynh1",
+    "url": "https://github.com/gcollin/cookie-aware-cors-proxy",
+    "upstream": {
+        "license": "MIT",
+        "code": "https://github.com/gcollin/cookie-aware-cors-proxy"
+    },
+    "license": "MIT",
+    "maintainer": {
+        "name": "Gerard Collin",
+        "email": "ger@collin.best"
+    },
+    "requirements": {
+        "yunohost": ">= 11.0.0"
+    },
+    "multi_instance": false,
+    "services": [
+        "nginx"
+    ],
+    "arguments": {
+        "install": [
+            {
+                "name": "domain",
+                "type": "domain"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "example": "/proxy",
+                "default": "/proxy"
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "default": true
+            }
+        ]
+    }
+}
