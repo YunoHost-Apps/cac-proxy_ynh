@@ -1,20 +1,8 @@
-Mongo Express is a Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3.
-You can as well install a Mongo database - version 4, 5 or 6 in your yunohost server if you want 
+Cookie Aware Cors Proxy is an http proxy letting the browser itself manages cookies and redirects.
+Most other cores proxy directly respond to redirects, and doesn't send cookies, thus breaking the flow.
+With Cookie Aware Cors Proxy, you can call a website not supporting CORS from your own web application, and get the html result.
 
 ### Features
-- Optionally installs Mongo server
-- Connect to multiple databases
-- View/add/delete databases
-- View/add/rename/delete collections
-- View/add/update/delete documents
-- Preview audio/video/image assets inline in collection view
-- Nested and/or large objects are collapsible for easy overview
-- Async on-demand loading of big document properties (>100KB default) to keep collection view fast
-- GridFS support - add/get/delete incredibly large files
-- Use BSON data types in documents
-- Mobile / Responsive - Bootstrap 3 works passably on small screens when you're in a bind
-- Connect and authenticate to individual databases
-- Authenticate as admin to view all databases
-- Database blacklist/whitelist
-- Custom CA and CA validation disabling
-- Supports replica sets
+- Translates cookies and redirect locations from the target website to have the browser continue to call the proxy and not directly the website 
+- Extensive and dynamic support for log and debug information
+- Two engines: a lightweight and one based on chrome to support websites running javascript

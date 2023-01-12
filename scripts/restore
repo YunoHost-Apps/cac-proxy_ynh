@@ -112,7 +112,7 @@ chown $app:adm /var/log/$app
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="Mongo Express to easily administer your Mongo databases" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="A Cors proxy letting the browser manages cookies and redirects." --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
