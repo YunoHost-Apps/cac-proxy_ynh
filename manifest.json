@@ -37,6 +37,15 @@
                 "default": "/proxy"
             },
             {
+                "name": "public_key",
+                "type": "string",
+                "optional": true,
+                "ask": {
+                    "en": "SSH Public key to allow service updates as part of delivery process, leave empty to disable.",
+                    "fr": "Clef publique SSH permettant la mise à jour des services via une deploiement automatique, inactif si non renseigné."
+                }
+            },
+            {
                 "name": "is_public",
                 "type": "boolean",
                 "default": true

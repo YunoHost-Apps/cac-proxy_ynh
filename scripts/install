@@ -25,6 +25,7 @@ ynh_abort_if_errors
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
+public_key=$YNH_APP_ARG_PUBLIC_KEY
 is_public=$YNH_APP_ARG_IS_PUBLIC
 
 ### If it's a multi-instance app, meaning it can be installed several times independently
@@ -139,6 +140,35 @@ ynh_setup_source --source_id=amd64 --dest_dir="$final_path"
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:$app "$final_path"
+
+if [ -n "$public_key" ]
+then
+  ynh_script_progression --message="Enabling ssh access for dev..." --weight=1
+  #enable ssh access to the files for updates
+  #todo: Secure it more with https://github.com/YunoHost-Apps/ssh_chroot_dir_ynh
+  mkdir --parents $final_path/.ssh
+  ynh_add_config --template="authorized_keys" --destination="$final_path/.ssh/authorized_keys"
+  ynh_app_setting_set --app=$app --key=public_key --value=$public_key
+  chown -R $app:$app "$final_path/.ssh"
+  chmod 700 "$final_path/.ssh"
+  chmod 600 "$final_path/.ssh/authorized_keys"
+
+  #=================================================
+  # Create restart services file
+  #=================================================
+
+  # Enable restarting of services from ssh
+  ynh_add_config --template="restart-proxy.sh" --destination="$final_path/restart-proxy.sh"
+
+  # Enable root ownership to be able to call systemctl
+  chown $app:$app "$final_path/restart-proxy.sh"
+  chmod o-rwx,gu=rwx "$final_path/restart-proxy.sh"
+
+  ynh_add_config --template="cac-proxy-sudoers" --destination="/etc/sudoers.d/$app-sudoers"
+  chown root:root "/etc/sudoers.d/$app-sudoers"
+  chmod o-rwx,gu=r "/etc/sudoers.d/$app-sudoers"
+
+fi
 
 #=================================================
 # NGINX CONFIGURATION
