@@ -17,6 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Cookie Aware Cors Proxy is an http proxy letting the browser itself manages cookies and redirects.
 Most other cores proxy directly respond to redirects, and doesn't send cookies, thus breaking the flow.
+
 With Cookie Aware Cors Proxy, you can call a website not supporting CORS from your own web application, and get the html result.
 
 ### Features
@@ -29,9 +30,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 ## Screenshots
 
-![Screenshot of Cors Proxy](./doc/screenshots/document-edit.png)
-![Screenshot of Cors Proxy](./doc/screenshots/collection-view.png)
-![Screenshot of Cors Proxy](./doc/screenshots/databases-view.png)
+![Screenshot of Cors Proxy](./doc/screenshots/fnac-logs.png)
 
 ## Disclaimers / important information
 
