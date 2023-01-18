@@ -5,15 +5,15 @@ It shall NOT be edited by hand.
 
 # Cors Proxy pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/cac-proxy.svg)](https://dash.yunohost.org/appci/app/cac-proxy) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/cac-proxy.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/cac-proxy.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/cac-proxy.svg)](https://dash.yunohost.org/appci/app/cac-proxy) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/cac-proxy.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/cac-proxy.maintain.svg)  
 [![Installer Cors Proxy avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=cac-proxy)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Cors Proxy rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Cors Proxy rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Cookie Aware Cors Proxy is an http proxy letting the browser itself manages cookies and redirects.
 Most other cores proxy directly respond to redirects, and doesn't send cookies, thus breaking the flow.
@@ -27,9 +27,9 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 **Version incluse :** 1.0~ynh1
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Cors Proxy](./doc/screenshots/fnac-logs.png)
+![Capture d’écran de Cors Proxy](./doc/screenshots/fnac-logs.png)
 
 ## Avertissements / informations importantes
 
@@ -40,7 +40,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 ## Documentations et ressources
 
-* Dépôt de code officiel de l'app : <https://github.com/gcollin/cookie-aware-cors-proxy>
+* Dépôt de code officiel de l’app : <https://github.com/gcollin/cookie-aware-cors-proxy>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_cac-proxy>
 * Signaler un bug : <https://github.com/YunoHost-Apps/cac-proxy_ynh/issues>
 
@@ -56,4 +56,4 @@ ou
 sudo yunohost app upgrade cac-proxy -u https://github.com/YunoHost-Apps/cac-proxy_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
