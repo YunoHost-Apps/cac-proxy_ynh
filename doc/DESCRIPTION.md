@@ -1,5 +1,6 @@
 Cookie Aware Cors Proxy is an http proxy letting the browser itself manages cookies and redirects.
 Most other cores proxy directly respond to redirects, and doesn't send cookies, thus breaking the flow.
+
 With Cookie Aware Cors Proxy, you can call a website not supporting CORS from your own web application, and get the html result.
 
 ### Features
