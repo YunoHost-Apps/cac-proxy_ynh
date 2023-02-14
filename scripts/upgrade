@@ -83,8 +83,16 @@ ynh_use_nodejs
 #=================================================
 ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
+  #Recreate the user to enable shell if needed
+user_shell=$(grep "^$app:" /etc/passwd | cut -d: -f7)
+if [ "$user_shell" == "/usr/sbin/nologin" ]; then
+  chsh --shell /bin/sh $app
+fi
+  # Ensure the use can connect through ssh
+user_groups=$(groups "$app")
+if [[ "$user_groups" != *"ssh.app"* ]]; then
+  ynh_system_user_create --username=$app --groups="ssh.app"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

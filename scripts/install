@@ -122,7 +122,7 @@ ynh_use_nodejs
 ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_system_user_create --username=$app --use_shell --home_dir="$final_path" --groups="ssh.app"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
