@@ -94,11 +94,22 @@ if [[ "$user_groups" != *"ssh.app"* ]]; then
   ynh_system_user_create --username=$app --groups="ssh.app"
 fi
 
+
+#=================================================
+# SPECIFIC UPGRADE
+#=================================================
+complete_install=false
+
+# Check if we need to clean up old bad installs
+if [ -f "$final_path/" ]; then
+  complete_install=true
+  rm -rf "$final_path/*"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
-if [ "$upgrade_type" == "UPGRADE_APP" ]
+if [ "$upgrade_type" == "UPGRADE_APP" ] || [ "$complete_install" == "true" ]
 then
 	ynh_script_progression --message="Upgrading source files..." --weight=6
 
@@ -117,6 +128,35 @@ chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:$app "$final_path"
 
+if [ -n "$public_key" ] && [ "$complete_install" == "true" ]
+then
+  ynh_script_progression --message="Enabling ssh access for dev..." --weight=1
+  #enable ssh access to the files for updates
+  #todo: Secure it more with https://github.com/YunoHost-Apps/ssh_chroot_dir_ynh
+  mkdir --parents $final_path/.ssh
+  ynh_add_config --template="authorized_keys" --destination="$final_path/.ssh/authorized_keys"
+  ynh_app_setting_set --app=$app --key=public_key --value=$public_key
+  chown -R $app:$app "$final_path/.ssh"
+  chmod 700 "$final_path/.ssh"
+  chmod 600 "$final_path/.ssh/authorized_keys"
+
+  #=================================================
+  # Create restart services file
+  #=================================================
+
+  # Enable restarting of services from ssh
+  ynh_add_config --template="restart-proxy.sh" --destination="$final_path/restart-proxy.sh"
+
+  # Enable root ownership to be able to call systemctl
+  chown $app:$app "$final_path/restart-proxy.sh"
+  chmod o-rwx,gu=rwx "$final_path/restart-proxy.sh"
+
+  ynh_add_config --template="cac-proxy-sudoers" --destination="/etc/sudoers.d/$app-sudoers"
+  chown root:root "/etc/sudoers.d/$app-sudoers"
+  chmod o-rwx,gu=r "/etc/sudoers.d/$app-sudoers"
+
+fi
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -125,10 +165,6 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# ...
 #=================================================
 
 #=================================================
