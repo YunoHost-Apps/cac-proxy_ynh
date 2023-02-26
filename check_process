@@ -6,6 +6,7 @@
 		domain="domain.tld"
 		path="/path"
 		is_public=0
+		install_chromium=1
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1
@@ -14,7 +15,7 @@
 		setup_private=0
 		setup_public=1
 		upgrade=1
-		upgrade=0	from_commit=CommitHash
+		upgrade=1	from_commit=b446048d123428f5260c5757245e8ed5ad454fb0
 		backup_restore=1
 		multi_instance=0
 		port_already_use=0
