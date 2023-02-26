@@ -6,6 +6,7 @@
 		domain="domain.tld"
 		path="/path"
 		is_public=0
+		install_chromium=1
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1

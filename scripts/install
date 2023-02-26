@@ -27,6 +27,7 @@ domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 public_key=$YNH_APP_ARG_PUBLIC_KEY
 is_public=$YNH_APP_ARG_IS_PUBLIC
+install_chromium=$YNH_APP_ARG_INSTALL_CHROMIUM
 
 ### If it's a multi-instance app, meaning it can be installed several times independently
 ### The id of the app as stated in the manifest is available as $YNH_APP_ID
@@ -74,6 +75,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
+ynh_app_setting_set --app=$app --key=install_chromium --value=$install_chromium
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -135,7 +137,8 @@ ynh_script_progression --message="Setting up source files..." --weight=6
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from amd64.src
-ynh_setup_source --source_id=amd64 --dest_dir="$final_path"
+mkdir --parents $final_path/package
+ynh_setup_source --source_id=amd64 --dest_dir="$final_path/package"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
@@ -168,6 +171,19 @@ then
   chown root:root "/etc/sudoers.d/$app-sudoers"
   chmod o-rwx,gu=r "/etc/sudoers.d/$app-sudoers"
 
+fi
+
+#=================================================
+# Install chromium
+#=================================================
+if [ $install_chromium -eq 1 ]
+then
+  ynh_script_progression --message="Installing Chromium..." --weight=8
+
+  cd "$final_path/package"
+  ynh_exec_as $app $ynh_node_load_PATH $ynh_node "./node_modules/puppeteer/install.js"
+
+  cd -
 fi
 
 #=================================================

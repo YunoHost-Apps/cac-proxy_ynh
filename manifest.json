@@ -37,6 +37,16 @@
                 "default": "/proxy"
             },
             {
+                "name": "install_chromium",
+                "type": "boolean",
+                "default": false,
+                "optional": true,
+                "ask": {
+                    "en": "Install Chromium for advanced website support (+480 MB).",
+                    "fr": "Installer Chromium pour supporter les sites web complexes (+480 MB)."
+                }
+            },
+            {
                 "name": "public_key",
                 "type": "string",
                 "optional": true,

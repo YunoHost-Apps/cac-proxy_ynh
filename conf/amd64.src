@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.1.0/cookie-aware-cors-proxy.tgz
-SOURCE_SUM=473df2664fe560b525a8a4d4d9edd4ffefa544dabfd37a25e199f2a37270a6e0
+SOURCE_URL=https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.1.4/cookie-aware-cors-proxy.tgz
+SOURCE_SUM=c56ca989233d4d2f3a2304ec96d979445f97232c8be63d5910d819af66f83ab9
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
