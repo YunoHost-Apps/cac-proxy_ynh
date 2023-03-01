@@ -104,7 +104,11 @@ complete_install=false
 # Check if we need to clean up old bad installs
 if [ -f "$final_path/package.json" ]; then
   complete_install=true
-  ynh_secure_remove --file="$final_path/*"
+  ynh_secure_remove --file="$final_path"
+  mkdir "$final_path"
+  chmod 750 "$final_path"
+  chmod -R o-rwx "$final_path"
+  chown -R $app:$app "$final_path"
 fi
 
 #=================================================
