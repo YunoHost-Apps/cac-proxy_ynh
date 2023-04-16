@@ -109,6 +109,20 @@ ynh_script_progression --message="Updating .env configuration..."
 ynh_backup_if_checksum_is_different --file="$final_path/.env"
 domain=$new_domain
 path_url=$new_path
+
+# We must use chrome sandbox for kernels 5.x, 6.x doesn't need it anymore
+kernel_release=$(uname -r)
+if [[ $kernel_release == 5.* ]]
+then
+  bypass_sandbox="TRUE"
+  if [ $install_chromium -eq 1 ]
+  then
+    ynh_print_warn --message="Using non sandboxed chromium as kernel release is less than 6.x"
+  fi
+else
+  bypass_sandbox="FALSE"
+fi
+
 ynh_add_config --template=".env" --destination="$final_path/.env"
 
 # FIXME: this should be handled by the core in the future
