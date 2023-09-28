@@ -30,6 +30,7 @@ app=$YNH_APP_INSTANCE_NAME
 
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 domain=$(ynh_app_setting_get --app=$app --key=domain)
+public_key=$(ynh_app_setting_get --app=$app --key=public_key)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
@@ -56,8 +57,10 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 # SPECIFIC BACKUP
 #=================================================
-ynh_backup --src_path="/etc/sudoers.d/$app-sudoers"
-
+if [ -n "$public_key" ]
+then
+  ynh_backup --src_path="/etc/sudoers.d/$app-sudoers"
+fi
 # BACKUP LOGROTATE
 #=================================================
 
