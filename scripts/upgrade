@@ -38,16 +38,30 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
+# There is an issue in previous backup file in case of non public_key, so we create the missing directory
+if [ ! -f "/etc/sudoers.d/$app-sudoers" ]
+then
+  touch "/etc/sudoers.d/$app-sudoers"
+fi
+
 ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
 ynh_clean_setup () {
-	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
+  # Restore it if the upgrade fails
+  ynh_restore_upgradebackup
 }
+
+# Removes the directory created only for backup if not necessary
+if [ ! -n "$public_key" ]
+then
+  rm "/etc/sudoers.d/$app-sudoers"
+fi
+
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
+
 
 #=================================================
 # STANDARD UPGRADE STEPS
