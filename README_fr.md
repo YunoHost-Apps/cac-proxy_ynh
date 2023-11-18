@@ -27,7 +27,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 - Two engines: a lightweight and one based on chrome to support websites running javascript
 
 
-**Version incluse :** 1.2.0~ynh2
+**Version incluse :** 1.2.1~ynh1
 
 ## Captures d’écran
 
@@ -43,7 +43,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 ## Documentations et ressources
 
 * Dépôt de code officiel de l’app : <https://github.com/gcollin/cookie-aware-cors-proxy>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_cac-proxy>
+* YunoHost Store: <https://apps.yunohost.org/app/cac-proxy>
 * Signaler un bug : <https://github.com/YunoHost-Apps/cac-proxy_ynh/issues>
 
 ## Informations pour les développeurs
