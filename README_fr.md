@@ -27,7 +27,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 - Two engines: a lightweight and one based on chrome to support websites running javascript
 
 
-**Version incluse :** 1.2.0~ynh2
+**Version incluse :** 1.2.1~ynh1
 
 ## Captures d’écran
 
