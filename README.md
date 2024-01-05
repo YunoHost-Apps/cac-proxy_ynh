@@ -35,7 +35,6 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 ## Documentation and resources
 
-* Official app website: <https://github.com/gcollin/cookie-aware-cors-proxy>
 * Upstream app code repository: <https://github.com/gcollin/cookie-aware-cors-proxy>
 * YunoHost Store: <https://apps.yunohost.org/app/cac-proxy>
 * Report a bug: <https://github.com/YunoHost-Apps/cac-proxy_ynh/issues>
