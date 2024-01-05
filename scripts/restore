@@ -40,7 +40,7 @@ chown $app:adm /var/log/$app
 ynh_script_progression --message="Reinstalling NodeJS..." --weight=21
 
 # Define and install dependencies
-ynh_install_nodejs --nodejs_version="$NODEJS_VERSION"
+ynh_install_nodejs --nodejs_version="$nodejs_version"
 ynh_use_nodejs
 
 #=================================================
