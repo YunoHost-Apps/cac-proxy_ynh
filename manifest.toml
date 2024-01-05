@@ -1,0 +1,69 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "cac-proxy"
+name = "Cors Proxy"
+description.en = "An advanced https proxy allowing you to call other websites from your own web application."
+description.fr = "Un proxy https avancé vous permettant d'appeler d'autres sites depuis votre propre application web."
+
+version = "1.2.1~ynh1"
+
+maintainers = ["Gerard Collin"]
+
+[upstream]
+license = "MIT"
+code = "https://github.com/gcollin/cookie-aware-cors-proxy"
+
+[integration]
+yunohost = ">= 11.0.0"
+architectures = ["amd64"]
+multi_instance = false
+ldap = "not_relevant"
+sso = "not_relevant"
+disk = "50M"
+ram.build = "120M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/proxy"
+
+    [install.install_chromium]
+    ask.en = "Install Chromium for advanced website support (+480 MB)."
+    ask.fr = "Installer Chromium pour supporter les sites web complexes (+480 MB)."
+    type = "boolean"
+    default = false
+    optional = true
+
+    [install.public_key]
+    ask.en = "SSH Public key to allow service updates as part of delivery process, leave empty to disable."
+    ask.fr = "Clef publique SSH permettant la mise à jour des services via une deploiement automatique, inactif si non renseigné."
+    type = "string"
+    optional = true
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+    [resources.sources.main]
+    amd64.url = "https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.2.1/cookie-aware-cors-proxy.tgz"
+    amd64.sha256 = "1eec01aab716c78007c0cd0df81612b192bf38279b88ee2168ee7579a36ce967"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset.amd64 = "cookie-aware-cors-proxy.tgz"
+
+    [resources.system_user]
+    allow_ssh = true
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+    main.default = 3000

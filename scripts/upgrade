@@ -9,59 +9,7 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-#=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-port=$(ynh_app_setting_get --app=$app --key=port)
-public_key=$(ynh_app_setting_get --app=$app --key=public_key)
-install_chromium=$(ynh_app_setting_get --app=$app --key=install_chromium)
-
-#=================================================
-# CHECK VERSION
-#=================================================
-
-### This helper will compare the version of the currently installed app and the version of the upstream package.
-### $upgrade_type can have 2 different values
-### - UPGRADE_APP if the upstream app version has changed
-### - UPGRADE_PACKAGE if only the YunoHost package has changed
-### ynh_check_app_version_changed will stop the upgrade if the app is up to date.
-### UPGRADE_APP should be used to upgrade the core app only if there's an upgrade to do.
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-# There is an issue in previous backup file in case of non public_key, so we create the missing directory
-if [ ! -f "/etc/sudoers.d/$app-sudoers" ]
-then
-  touch "/etc/sudoers.d/$app-sudoers"
-fi
-
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-  # Restore it if the upgrade fails
-  ynh_restore_upgradebackup
-}
-
-# Removes the directory created only for backup if not necessary
-if [ ! -n "$public_key" ]
-then
-  rm "/etc/sudoers.d/$app-sudoers"
-fi
-
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -75,189 +23,89 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
+ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
+
+# Missing settings ?
+if [ -z "${public_key+x}" ]; then
+    public_key=""
+    ynh_app_setting_set --app="$app" --key=public_key --value="$public_key"
+fi
+if [ -z "${install_chromium+x}" ]; then
+    install_chromium="false"
+    ynh_app_setting_set --app="$app" --key=install_chromium --value="$install_chromium"
+fi
 
 #=================================================
-# INSTALL DEPENDENCIES
+# INSTALL NODEJS
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=3
+ynh_script_progression --message="Upgrading NodeJS..." --weight=3
 
-### `ynh_install_app_dependencies` allows you to add any "apt" dependencies to the package.
-### Those deb packages will be installed as dependencies of this package.
-### If you're not using this helper:
-###		- Remove the section "REMOVE DEPENDENCIES" in the remove script
-###		- Remove the variable "pkg_dependencies" in _common.sh
-###		- As well as the section "REINSTALL DEPENDENCIES" in the restore script
-###		- And the section "UPGRADE DEPENDENCIES" in the upgrade script
-
-ynh_install_app_dependencies $pkg_dependencies
 ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_use_nodejs
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-  #Recreate the user to enable shell if needed
-user_shell=$(grep "^$app:" /etc/passwd | cut -d: -f7)
-if [ "$user_shell" == "/usr/sbin/nologin" ]; then
-  chsh --shell /bin/sh $app
-fi
-  # Ensure the use can connect through ssh
-user_groups=$(groups "$app")
-if [[ "$user_groups" != *"ssh.app"* ]]; then
-  ynh_system_user_create --username=$app --groups="ssh.app"
-fi
-
-
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-complete_install=false
-
-# Check if we need to clean up old bad installs
-if [ -f "$final_path/package.json" ]; then
-  complete_install=true
-  ynh_secure_remove --file="$final_path"
-  mkdir "$final_path"
-  chmod 750 "$final_path"
-  chmod -R o-rwx "$final_path"
-  chown -R $app:$app "$final_path"
-fi
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-if [ "$upgrade_type" == "UPGRADE_APP" ] || [ "$complete_install" == "true" ]
-then
-	ynh_script_progression --message="Upgrading source files..." --weight=6
+if [ "$upgrade_type" == "UPGRADE_APP" ]; then
+    ynh_script_progression --message="Upgrading source files..." --weight=6
 
-	# Download, check integrity, uncompress and patch the source from amd64.src
-  mkdir --parents $final_path/package
-  ynh_setup_source --source_id=amd64 --dest_dir="$final_path/package"
-
+    # Download, check integrity, uncompress and patch the source from amd64.src
+    ynh_setup_source --dest_dir="$install_dir/package"
 fi
 
-# FIXME: this should be managed by the core in the future
-# Here, as a packager, you may have to tweak the ownerhsip/permissions
-# such that the appropriate users (e.g. maybe www-data) can access
-# files in some cases.
-# But FOR THE LOVE OF GOD, do not allow r/x for "others" on the entire folder -
-# this will be treated as a security issue.
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
-if [ -n "$public_key" ] && [ "$complete_install" == "true" ]
-then
-  ynh_script_progression --message="Enabling ssh access for dev..." --weight=1
-  #enable ssh access to the files for updates
-  #todo: Secure it more with https://github.com/YunoHost-Apps/ssh_chroot_dir_ynh
-  mkdir --parents $final_path/.ssh
-  ynh_add_config --template="authorized_keys" --destination="$final_path/.ssh/authorized_keys"
-  ynh_app_setting_set --app=$app --key=public_key --value=$public_key
-  chown -R $app:$app "$final_path/.ssh"
-  chmod 700 "$final_path/.ssh"
-  chmod 600 "$final_path/.ssh/authorized_keys"
+if [ -n "$public_key" ]; then
+    ynh_script_progression --message="Enabling ssh access for dev..." --weight=1
+    # enable ssh access to the files for updates
+    # todo: Secure it more with https://github.com/YunoHost-Apps/ssh_chroot_dir_ynh
+    mkdir --parents "$install_dir/.ssh"
+    ynh_add_config --template="authorized_keys" --destination="$install_dir/.ssh/authorized_keys"
 
-  #=================================================
-  # Create restart services file
-  #=================================================
+    chown -R "$app:$app" "$install_dir/.ssh"
+    chmod 700 "$install_dir/.ssh"
+    chmod 600 "$install_dir/.ssh/authorized_keys"
 
-  # Enable restarting of services from ssh
-  ynh_add_config --template="restart-proxy.sh" --destination="$final_path/restart-proxy.sh"
-
-  # Enable root ownership to be able to call systemctl
-  chown $app:$app "$final_path/restart-proxy.sh"
-  chmod o-rwx,gu=rwx "$final_path/restart-proxy.sh"
-
-  ynh_add_config --template="cac-proxy-sudoers" --destination="/etc/sudoers.d/$app-sudoers"
-  chown root:root "/etc/sudoers.d/$app-sudoers"
-  chmod o-rwx,gu=r "/etc/sudoers.d/$app-sudoers"
-
+    _install_restart_script_and_sudoers
 fi
+
 
 #=================================================
 # Install chromium
 #=================================================
-if [ $install_chromium -eq 1 ]
-then
-  ynh_script_progression --message="Upgrading Chromium..." --weight=8
+if [ "$install_chromium" -eq 1 ]; then
+    ynh_script_progression --message="Upgrading Chromium..." --weight=8
+
     # Remove old versions of chrome
-  ynh_secure_remove --file="$final_path/.cache/puppeteer/chrome"
-    # And install the latest one
-  cd "$final_path/package"
-  ynh_exec_as $app $ynh_node_load_PATH $ynh_node "./node_modules/puppeteer/install.js"
+    ynh_secure_remove --file="$install_dir/.cache/puppeteer/chrome"
 
+    pushd "$install_dir/package"
+        ynh_exec_as "$app" $ynh_node_load_PATH $ynh_node "./node_modules/puppeteer/install.js"
+    popd
 fi
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
 
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-# We must use chrome sandbox for kernels 5.x, 6.x doesn't need it anymore
-kernel_release=$(uname -r)
-if [[ $kernel_release == 5.* ]]
-then
-  bypass_sandbox="TRUE"
-  if [ $install_chromium -eq 1 ]
-  then
-    ynh_print_warn --message="Using non sandboxed chromium as kernel release is less than 6.x"
-  fi
-else
-  bypass_sandbox="FALSE"
-fi
-
-ynh_add_config --template=".env" --destination="$final_path/.env"
-
-# FIXME: this should be handled by the core in the future
-# You may need to use chmod 600 instead of 400,
-# for example if the app is expected to be able to modify its own config
-chmod 400 "$final_path/.env"
-chown $app:$app "$final_path/.env"
-
-### For more complex cases where you want to replace stuff using regexes,
-### you shoud rely on ynh_replace_string (which is basically a wrapper for sed)
-### When doing so, you also need to manually call ynh_store_file_checksum
-###
-### ynh_replace_string --match_string="match_string" --replace_string="replace_string" --target_file="$final_path/some_config_file"
-### ynh_store_file_checksum --file="$final_path/some_config_file"
+_generate_env_file
 
 #=================================================
-# SETUP SYSTEMD
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
+ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
+yunohost service add $app --description="A Cors proxy letting the browser manages cookies and redirects." --log="/var/log/$app/$app.log"
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
-
-yunohost service add $app --description="A Cors proxy letting the browser manages cookies and redirects." --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -265,13 +113,6 @@ yunohost service add $app --description="A Cors proxy letting the browser manage
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

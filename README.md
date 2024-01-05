@@ -33,13 +33,6 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 ![Screenshot of Cors Proxy](./doc/screenshots/fnac-logs.png)
 
-## Disclaimers / important information
-
-* About security
-    * Single-sign on or LDAP are not integrated
-    * It works only if you define it as public upon installation otherwise the yunohost SSO will interfere
-
-
 ## Documentation and resources
 
 * Upstream app code repository: <https://github.com/gcollin/cookie-aware-cors-proxy>
