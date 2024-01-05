@@ -1,0 +1,12 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/tests.v1.schema.json
+
+test_format = 1.0
+
+[default]
+
+    args.public_key = ""
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
+
+    test_upgrade_from.b446048d123428f5260c5757245e8ed5ad454fb0.name= "v1.0"
