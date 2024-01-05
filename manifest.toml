@@ -14,7 +14,6 @@ maintainers = ["Gerard Collin"]
 [upstream]
 license = "MIT"
 code = "https://github.com/gcollin/cookie-aware-cors-proxy"
-website = "https://github.com/gcollin/cookie-aware-cors-proxy"
 
 [integration]
 yunohost = ">= 11.0.0"
