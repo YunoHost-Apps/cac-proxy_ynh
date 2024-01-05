@@ -25,10 +25,14 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
+# Missing settings ?
 if [ -z "${public_key+x}" ]; then
-    # Missing setting ?
     public_key=""
     ynh_app_setting_set --app="$app" --key=public_key --value="$public_key"
+fi
+if [ -z "${install_chromium+x}" ]; then
+    install_chromium="false"
+    ynh_app_setting_set --app="$app" --key=install_chromium --value="$install_chromium"
 fi
 
 #=================================================
@@ -70,7 +74,7 @@ fi
 #=================================================
 # Install chromium
 #=================================================
-if [ $install_chromium -eq 1 ]; then
+if [ "$install_chromium" -eq 1 ]; then
     ynh_script_progression --message="Upgrading Chromium..." --weight=8
 
     # Remove old versions of chrome
