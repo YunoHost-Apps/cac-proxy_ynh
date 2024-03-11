@@ -50,7 +50,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]; then
     ynh_script_progression --message="Upgrading source files..." --weight=6
 
     # Download, check integrity, uncompress and patch the source from amd64.src
-    ynh_setup_source --dest_dir="$install_dir/package"
+    ynh_setup_source --dest_dir="$install_dir/package" --full_replace=1
 fi
 
 chmod -R o-rwx "$install_dir"
