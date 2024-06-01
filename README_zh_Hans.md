@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Cors Proxy
+# YunoHost 上的 Cors Proxy
 
 [![集成程度](https://dash.yunohost.org/integration/cac-proxy.svg)](https://dash.yunohost.org/appci/app/cac-proxy) ![工作状态](https://ci-apps.yunohost.org/ci/badges/cac-proxy.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/cac-proxy.maintain.svg)
 
