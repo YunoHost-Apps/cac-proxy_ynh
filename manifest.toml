@@ -16,7 +16,7 @@ license = "MIT"
 code = "https://github.com/gcollin/cookie-aware-cors-proxy"
 
 [integration]
-yunohost = ">= 11.0.0"
+yunohost = ">= 11.1.9"
 architectures = ["amd64"]
 multi_instance = false
 ldap = "not_relevant"
