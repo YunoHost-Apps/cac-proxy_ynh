@@ -28,7 +28,11 @@ ynh_remove_systemd_config
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
 
-# Remove the log files
+
+
+
+
+
 
 _remove_restart_script_and_sudoers
 
