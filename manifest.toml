@@ -7,7 +7,7 @@ name = "Cors Proxy"
 description.en = "An advanced https proxy allowing you to call other websites from your own web application."
 description.fr = "Un proxy https avancé vous permettant d'appeler d'autres sites depuis votre propre application web."
 
-version = "1.2.1~ynh2"
+version = "1.2.1~ynh3"
 
 maintainers = ["Gerard Collin"]
 

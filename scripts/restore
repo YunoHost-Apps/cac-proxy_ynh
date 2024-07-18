@@ -29,9 +29,6 @@ if [ -n "$public_key" ]; then
     _install_restart_script_and_sudoers
 fi
 
-mkdir --parents /var/log/$app
-chown $app:adm /var/log/$app
-
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
