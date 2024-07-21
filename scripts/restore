@@ -29,9 +29,6 @@ if [ -n "$public_key" ]; then
     _install_restart_script_and_sudoers
 fi
 
-mkdir --parents /var/log/$app
-chown $app:adm /var/log/$app
-
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
@@ -51,6 +48,8 @@ ynh_script_progression --message="Restoring system configurations related to $ap
 ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
+
+mkdir --parents /var/log/$app
 
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
