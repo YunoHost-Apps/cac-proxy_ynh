@@ -81,7 +81,7 @@ if [ "$install_chromium" -eq 1 ]; then
     ynh_secure_remove --file="$install_dir/.cache/puppeteer/chrome"
 
     pushd "$install_dir/package"
-        ynh_exec_as "$app" $ynh_node_load_PATH $ynh_node "./node_modules/puppeteer/install.js"
+        ynh_exec_as "$app" $nodejs_dir/node "./node_modules/puppeteer/install.js"
     popd
 fi
 
