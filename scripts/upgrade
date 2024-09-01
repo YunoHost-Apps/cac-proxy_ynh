@@ -43,8 +43,6 @@ if ynh_app_upstream_version_changed; then
     ynh_setup_source --dest_dir="$install_dir/package" --full_replace
 fi
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 if [ -n "$public_key" ]; then
     ynh_script_progression "Enabling ssh access for dev..."
     # enable ssh access to the files for updates
@@ -62,6 +60,7 @@ fi
 #=================================================
 # Install chromium
 #=================================================
+
 if [ "$install_chromium" -eq 1 ]; then
     ynh_script_progression "Upgrading Chromium..."
 
@@ -69,7 +68,7 @@ if [ "$install_chromium" -eq 1 ]; then
     ynh_safe_rm "$install_dir/.cache/puppeteer/chrome"
 
     pushd "$install_dir/package"
-        ynh_exec_as_app node_load_PATH node "./node_modules/puppeteer/install.js"
+        ynh_exec_as_app node "./node_modules/puppeteer/install.js"
     popd
 fi
 
