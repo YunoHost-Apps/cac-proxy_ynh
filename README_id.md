@@ -35,7 +35,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 
 ## Dokumentasi dan sumber daya
 
-- Repositori kode aplikasi hulu: <https://github.com/gcollin/cookie-aware-cors-proxy>
+- Depot kode aplikasi hulu: <https://github.com/gcollin/cookie-aware-cors-proxy>
 - Gudang YunoHost: <https://apps.yunohost.org/app/cac-proxy>
 - Laporkan bug: <https://github.com/YunoHost-Apps/cac-proxy_ynh/issues>
 
