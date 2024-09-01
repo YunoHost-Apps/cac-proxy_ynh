@@ -35,13 +35,9 @@ ynh_nodejs_install
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed; then
-    ynh_script_progression "Upgrading source files..."
+ynh_script_progression "Upgrading source files..."
 
-    # Download, check integrity, uncompress and patch the source from amd64.src
-    ynh_setup_source --dest_dir="$install_dir/package" --full_replace
-fi
+ynh_setup_source --dest_dir="$install_dir/package" --full_replace
 
 if [ -n "$public_key" ]; then
     ynh_script_progression "Enabling ssh access for dev..."
@@ -84,14 +80,12 @@ _generate_env_file
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
+
 yunohost service add $app --description="A Cors proxy letting the browser manages cookies and redirects." --log="/var/log/$app/$app.log"
 
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
 
 #=================================================
