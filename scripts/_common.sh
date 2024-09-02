@@ -4,7 +4,7 @@
 # COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
-nodejs_version=16
+nodejs_version=20
 
 _generate_env_file() {
     # We must use chrome sandbox for kernels 5.x, 6.x doesn't need it anymore

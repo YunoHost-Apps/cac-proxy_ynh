@@ -42,7 +42,7 @@ if [ $install_chromium -eq 1 ]; then
     ynh_script_progression "Installing Chromium..."
 
     pushd "$install_dir/package"
-        ynh_exec_as_app npm "./node_modules/puppeteer/install.js"
+        ynh_exec_as_app node "./node_modules/puppeteer/install.js"
     popd
 fi
 
