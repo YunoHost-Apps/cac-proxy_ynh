@@ -4,10 +4,10 @@ packaging_format = 2
 
 id = "cac-proxy"
 name = "Cors Proxy"
-description.en = "An advanced https proxy allowing you to call other websites from your own web application."
-description.fr = "Un proxy https avancé vous permettant d'appeler d'autres sites depuis votre propre application web."
+description.en = "HTTPS proxy allowing you to call other websites from your own web application"
+description.fr = "Proxy HTTPS permettant d'appeler d'autres sites depuis votre propre application web"
 
-version = "1.2.1~ynh4"
+version = "1.2.1~ynh5"
 
 maintainers = ["Gerard Collin"]
 
@@ -16,7 +16,8 @@ license = "MIT"
 code = "https://github.com/gcollin/cookie-aware-cors-proxy"
 
 [integration]
-yunohost = ">= 11.1.9"
+yunohost = ">= 11.2.29"
+helpers_version = "2.1"
 architectures = ["amd64"]
 multi_instance = false
 ldap = "not_relevant"
