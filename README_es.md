@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Cors Proxy para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/cac-proxy.svg)](https://dash.yunohost.org/appci/app/cac-proxy) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/cac-proxy.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/cac-proxy.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/cac-proxy.svg)](https://ci-apps.yunohost.org/ci/apps/cac-proxy/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/cac-proxy.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/cac-proxy.maintain.svg)
 
 [![Instalar Cors Proxy con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=cac-proxy)
 
@@ -27,7 +27,7 @@ With Cookie Aware Cors Proxy, you can call a website not supporting CORS from yo
 - Two engines: a lightweight and one based on chrome to support websites running javascript
 
 
-**Versión actual:** 1.2.1~ynh2
+**Versión actual:** 1.3.2~ynh1
 
 ## Capturas
 
