@@ -24,7 +24,7 @@ fi
 #=================================================
 ynh_script_progression "Reinstalling NodeJS..."
 
-ynh_nodejs_install
+nodejs_install
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
@@ -47,7 +47,7 @@ yunohost service add $app --description="A Cors proxy letting the browser manage
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's services..."
 
-ynh_systemctl --service=$app --action="start"
+ynh_systemctl  --action="start"
 
 ynh_systemctl --service=nginx --action=reload
 
