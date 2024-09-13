@@ -7,7 +7,7 @@ name = "Cors Proxy"
 description.en = "HTTPS proxy allowing you to call other websites from your own web application"
 description.fr = "Proxy HTTPS permettant d'appeler d'autres sites depuis votre propre application web"
 
-version = "1.2.1~ynh4"
+version = "1.3.2~ynh1"
 
 maintainers = ["Gerard Collin"]
 
@@ -53,8 +53,8 @@ ram.runtime = "50M"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.2.1/cookie-aware-cors-proxy.tgz"
-    amd64.sha256 = "1eec01aab716c78007c0cd0df81612b192bf38279b88ee2168ee7579a36ce967"
+    amd64.url = "https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.3.2/cookie-aware-cors-proxy.tgz"
+    amd64.sha256 = "45607f6150efc5011f41619db708867254e752826c76815036bbb3ad4fa6caa8"
     autoupdate.strategy = "latest_github_release"
     autoupdate.asset.amd64 = "cookie-aware-cors-proxy.tgz"
 
@@ -68,3 +68,4 @@ ram.runtime = "50M"
 
     [resources.ports]
     main.default = 3000
+

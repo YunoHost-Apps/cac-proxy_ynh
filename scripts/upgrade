@@ -57,16 +57,7 @@ fi
 # Install chromium
 #=================================================
 
-if [ "$install_chromium" -eq 1 ]; then
-    ynh_script_progression "Upgrading Chromium..."
-
-    # Remove old versions of chrome
-    ynh_safe_rm "$install_dir/.cache/puppeteer/chrome"
-
-    pushd "$install_dir/package"
-        ynh_exec_as_app $nodejs_dir/node "./node_modules/puppeteer/install.js"
-    popd
-fi
+_install_or_upgrade_chrome
 
 #=================================================
 # UPDATE A CONFIG FILE
