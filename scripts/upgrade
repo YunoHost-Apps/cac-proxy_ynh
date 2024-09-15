@@ -30,7 +30,7 @@ fi
 #=================================================
 ynh_script_progression "Upgrading NodeJS..."
 
-nodejs_install
+ynh_nodejs_install
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

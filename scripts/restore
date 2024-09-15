@@ -24,7 +24,7 @@ fi
 #=================================================
 ynh_script_progression "Reinstalling NodeJS..."
 
-nodejs_install
+ynh_nodejs_install
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
