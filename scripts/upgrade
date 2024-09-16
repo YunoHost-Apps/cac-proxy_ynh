@@ -56,6 +56,7 @@ fi
 #=================================================
 # Install chromium
 #=================================================
+ynh_script_progression "Setting up Chrome if asked"
 
 _install_or_upgrade_chrome
 
