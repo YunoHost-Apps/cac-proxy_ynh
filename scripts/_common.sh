@@ -73,7 +73,7 @@ _configure_chrome_exec() {
     chrome_exec=''
     local puppeeterDir="$install_dir/.cache/puppeteer"
     pushd "$puppeeterDir"
-        if [[ -e 'browsers.txt']]; then
+        if [[ -e 'browsers.txt' ]]; then
             chrome_exec=$(awk '/\S/{ s=$NF; } END{ print(s); }' browsers.txt)
         fi
     popd
