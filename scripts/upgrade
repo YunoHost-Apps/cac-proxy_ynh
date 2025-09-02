@@ -28,9 +28,9 @@ fi
 #=================================================
 # INSTALL NODEJS
 #=================================================
-ynh_script_progression "Upgrading NodeJS..."
+#REMOVEME? ynh_script_progression "Upgrading NodeJS..."
 
-ynh_nodejs_install
+#REMOVEME? ynh_nodejs_install
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

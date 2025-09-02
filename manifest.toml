@@ -16,7 +16,7 @@ license = "MIT"
 code = "https://github.com/gcollin/cookie-aware-cors-proxy"
 
 [integration]
-yunohost = ">= 11.2.18"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = ["amd64"]
 multi_instance = false
@@ -69,3 +69,6 @@ ram.runtime = "50M"
     [resources.ports]
     main.default = 3000
 
+
+    [resources.nodejs]
+    version = "20"
