@@ -26,13 +26,6 @@ if [ -z "${install_chromium+x}" ]; then
 fi
 
 #=================================================
-# INSTALL NODEJS
-#=================================================
-ynh_script_progression "Upgrading NodeJS..."
-
-ynh_nodejs_install
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."

@@ -20,13 +20,6 @@ if [ -n "$public_key" ]; then
 fi
 
 #=================================================
-# REINSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression "Reinstalling NodeJS..."
-
-ynh_nodejs_install
-
-#=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
