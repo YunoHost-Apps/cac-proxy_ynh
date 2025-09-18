@@ -4,8 +4,6 @@
 # COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
-#REMOVEME? nodejs_version=20
-
 _generate_env_file() {
     # We must use chrome sandbox for kernels 5.x, 6.x doesn't need it anymore
     kernel_release=$(uname -r)
@@ -50,7 +48,7 @@ _install_or_upgrade_chrome() {
 
         # instruct puppeteer to install chrome
         local puppeeterDir="$install_dir/.cache/puppeteer"
-        if [[ -e "$puppeeterDir/chrome" ]] || [[ -L "$puppeeterDir/chrome" ]]; then 
+        if [[ -e "$puppeeterDir/chrome" ]] || [[ -L "$puppeeterDir/chrome" ]]; then
             # Remove old versions of chrome
             ynh_safe_rm "$puppeeterDir/chrome"
         else
