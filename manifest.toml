@@ -7,13 +7,13 @@ name = "Cors Proxy"
 description.en = "HTTPS proxy allowing you to call other websites from your own web application"
 description.fr = "Proxy HTTPS permettant d'appeler d'autres sites depuis votre propre application web"
 
-version = "1.3.2~ynh2"
+version = "1.3.5~ynh2"
 
 maintainers = ["Gerard Collin"]
 
 [upstream]
 license = "MIT"
-code = "https://github.com/gcollin/cookie-aware-cors-proxy"
+code = "https://github.com/Crazypedia/cookie-aware-cors-proxy"
 
 [integration]
 yunohost = ">= 12.1.17"
@@ -47,14 +47,21 @@ ram.runtime = "50M"
     type = "string"
     optional = true
 
+    [install.cors_allowed_origins]
+    ask.en = "Web origins allowed to call this proxy from a browser (comma-separated, exact match, e.g. https://app.example.com). Leave empty to block all cross-origin browser requests; this can be changed later from the app's config panel."
+    ask.fr = "Origines web autorisées à appeler ce proxy depuis un navigateur (séparées par des virgules, correspondance exacte). Laisser vide pour bloquer toute requête cross-origin ; modifiable plus tard depuis le panneau de configuration de l'application."
+    type = "string"
+    default = ""
+    optional = true
+
     [install.init_main_permission]
     type = "group"
     default = "visitors"
 
 [resources]
     [resources.sources.main]
-    amd64.url = "https://github.com/gcollin/cookie-aware-cors-proxy/releases/download/v1.3.2/cookie-aware-cors-proxy.tgz"
-    amd64.sha256 = "45607f6150efc5011f41619db708867254e752826c76815036bbb3ad4fa6caa8"
+    amd64.url = "https://github.com/Crazypedia/cookie-aware-cors-proxy/releases/download/v1.3.5/cookie-aware-cors-proxy.tgz"
+    amd64.sha256 = "dded55c2c1de06e9086bd0def87aceb6625e33b6863e00a54ca10281fb57c1f6"
     autoupdate.strategy = "latest_github_release"
     autoupdate.asset.amd64 = "cookie-aware-cors-proxy.tgz"
 

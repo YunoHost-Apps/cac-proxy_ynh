@@ -24,6 +24,10 @@ if [ -z "${install_chromium+x}" ]; then
     install_chromium="false"
     ynh_app_setting_set --key=install_chromium --value="$install_chromium"
 fi
+if [ -z "${cors_allowed_origins+x}" ]; then
+    cors_allowed_origins=""
+    ynh_app_setting_set --key=cors_allowed_origins --value="$cors_allowed_origins"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

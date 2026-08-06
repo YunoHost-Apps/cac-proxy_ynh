@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+getter__cors_allowed_origins() {
+    ynh_app_setting_get --app="$app" --key=cors_allowed_origins
+}
+
+setter__cors_allowed_origins() {
+    ynh_app_setting_set --app="$app" --key=cors_allowed_origins --value="$cors_allowed_origins"
+    _generate_env_file
+    ynh_systemctl --action="restart"
+}
+
+ynh_app_config_run "$1"

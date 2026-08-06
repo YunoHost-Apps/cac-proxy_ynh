@@ -1,0 +1,18 @@
+version = "1.0"
+
+[main]
+name = "Security"
+
+    [main.cors]
+    name = "CORS"
+    help.en = "Controls which web origins are allowed to call this proxy from a browser. Required for browser-based apps (e.g. Vantage/fediDash) that call this proxy with header-based auth."
+    help.fr = "Contrôle les origines web autorisées à appeler ce proxy depuis un navigateur. Nécessaire pour les applications navigateur (ex. Vantage/fediDash) qui appellent ce proxy avec une authentification par en-têtes."
+
+        [main.cors.cors_allowed_origins]
+        ask.en = "Allowed origins (comma-separated, exact match, e.g. https://app.example.com)"
+        ask.fr = "Origines autorisées (séparées par des virgules, correspondance exacte)"
+        type = "string"
+        default = ""
+        help.en = "Leave empty to block all cross-origin browser requests (fails closed). Each origin must match exactly, including scheme and port; 'null' (sent by file:// pages and sandboxed iframes) is never accepted. Applying this setting restarts the proxy."
+        help.fr = "Laisser vide pour bloquer toutes les requêtes cross-origin (échec fermé par défaut). Chaque origine doit correspondre exactement, schéma et port inclus ; 'null' (envoyé par les pages file:// et les iframes sandboxées) n'est jamais accepté. Appliquer ce réglage redémarre le proxy."
+        bind = "settings"
