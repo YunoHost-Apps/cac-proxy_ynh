@@ -71,4 +71,4 @@ ram.runtime = "50M"
 
 
     [resources.nodejs]
-    version = "20"
+    version = "24"
